@@ -35,5 +35,12 @@ public class Main {
       }
     }while(repetir == 's');
     leitor.close();
-  }
+
+    //delete file
+    system.out.println("Deseja deletar o arquivo por completo? (ATENCAO: ISSO DELETARA TODOS OS DADOS DO ARQUIVO) (s/n)");
+    dellArquivo = leitor.next().charAt(0);
+    leitor.nextLine();
+    if(dellArquivo == 's'){
+    Controller.deletarArquivo("listaAnimes.txt");
+    }
 }

@@ -51,6 +51,20 @@ public class animeController {
     }
   }
 
+  //metodo que deleta o arquivo
+  public static void deletarArquivo(String nomeArquivo){
+    File arquivo = new File(nomeArquivo);
+    if (arquivo.exists()) {
+      if (arquivo.delete()) {
+        System.out.println("Arquivo deletado com sucesso!");
+      } else {
+        System.out.println("Erro ao deletar o arquivo.");
+      }
+    } else {
+      System.out.println("O arquivo não existe.");
+    }
+  }
+
   public static void registrarAnimes(Anime anime) {
     Scanner leitor = new Scanner(System.in);
     System.out.println("Informe o nome do anime:");
