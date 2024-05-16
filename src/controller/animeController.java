@@ -17,6 +17,40 @@ public class animeController {
     }
   }
 
+  //metodo para deletar os dados do anime em um arquivo
+  public static void deletarAnime(String nomeArquivo, String nomeAnime){
+    try {
+      File arquivo = new File(nomeArquivo);
+      FileReader fr = new FileReader(arquivo);
+      BufferedReader br = new BufferedReader(fr);
+      String linha;
+      String novoConteudo = "";
+      boolean encontrado = false;
+
+      while ((linha = br.readLine()) != null) {
+        if (!linha.contains(nomeAnime)) {
+          novoConteudo += linha + "\n";
+        } else {
+          encontrado = true;
+        }
+      }
+
+      br.close();
+      fr.close();
+
+      if (encontrado) {
+        FileWriter fw = new FileWriter(arquivo);
+        fw.write(novoConteudo);
+        fw.close();
+        System.out.println("Anime deletado com sucesso!");
+      } else {
+        System.out.println("Anime não encontrado no arquivo.");
+      }
+    } catch (IOException e) {
+      System.err.println("Erro ao ler ou escrever no arquivo: " + e.getMessage());
+    }
+  }
+
   public static void registrarAnimes(Anime anime) {
     Scanner leitor = new Scanner(System.in);
     System.out.println("Informe o nome do anime:");
