@@ -12,7 +12,6 @@ public class Main {
     animeListView View = new animeListView();
     Scanner leitor = new Scanner(System.in);
     char repetir;
-    //creat/update
     do {
       Controller.registrarAnimes(animex);
       Controller.escreverEmArquivo(animex, "listaAnimes.txt");
@@ -21,9 +20,7 @@ public class Main {
       leitor.nextLine();
     } while (repetir == 's');
     leitor.close();
-    //read
     View.exibirListaAnimes("listaAnimes.txt");
-    //delet
     do{
       System.out.println("Deseja deletar algum anime? (s/n)");
       repetir = leitor.next().charAt(0);
@@ -36,7 +33,6 @@ public class Main {
     }while(repetir == 's');
     leitor.close();
 
-    //delete file
     system.out.println("Deseja deletar o arquivo por completo? (ATENCAO: ISSO DELETARA TODOS OS DADOS DO ARQUIVO) (s/n)");
     dellArquivo = leitor.next().charAt(0);
     leitor.nextLine();

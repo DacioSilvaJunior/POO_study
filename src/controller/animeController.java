@@ -4,10 +4,8 @@ import java.io.*;
 import entities.Anime;
 import java.util.Scanner;
 
-// Classe para escrever e ler dados de Anime em um arquivo
 public class animeController {
 
-  // Método para escrever os dados do anime em um arquivo
   public static void escreverEmArquivo(Anime anime, String nomeArquivo) {
     try (PrintWriter writer = new PrintWriter(new FileWriter(nomeArquivo, true))) {
       writer.println(
@@ -17,7 +15,6 @@ public class animeController {
     }
   }
 
-  //metodo para deletar os dados do anime em um arquivo
   public static void deletarAnime(String nomeArquivo, String nomeAnime){
     try {
       File arquivo = new File(nomeArquivo);
@@ -51,7 +48,6 @@ public class animeController {
     }
   }
 
-  //metodo que deleta o arquivo
   public static void deletarArquivo(String nomeArquivo){
     File arquivo = new File(nomeArquivo);
     if (arquivo.exists()) {

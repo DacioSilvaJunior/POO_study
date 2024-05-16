@@ -1,13 +1,11 @@
 package entities;
 
-// Classe User
 public class User {
   private String nome;
   private String email;
   private String senha;
   private boolean pagante;
 
-  // Construtores
   public User(String nome, String email, String senha, boolean pagante) {
     this.nome = nome;
     this.email = email;
@@ -22,7 +20,6 @@ public class User {
     this.pagante = false;
   }
 
-  // Getters e Setters
   public String getNome() {
     return nome;
   }
