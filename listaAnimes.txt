@@ -1,3 +1,2 @@
 
-nome: naruto; tipo: luta; avaliaçao: 0
 nome: dg; tipo: luta; avaliaçao: 1

@@ -19,25 +19,25 @@ public class Main {
       repetir = leitor.next().charAt(0);
       leitor.nextLine();
     } while (repetir == 's');
-    leitor.close();
+
     View.exibirListaAnimes("listaAnimes.txt");
-    do{
+    do {
       System.out.println("Deseja deletar algum anime? (s/n)");
       repetir = leitor.next().charAt(0);
       leitor.nextLine();
-      if(repetir == 's'){
+      if (repetir == 's') {
         System.out.println("Informe o nome do anime que deseja deletar:");
         String nomeAnime = leitor.nextLine();
         Controller.deletarAnime("listaAnimes.txt", nomeAnime);
       }
-    }while(repetir == 's');
-    leitor.close();
+    } while (repetir == 's');
 
-    system.out.println("Deseja deletar o arquivo por completo? (ATENCAO: ISSO DELETARA TODOS OS DADOS DO ARQUIVO) (s/n)");
-    dellArquivo = leitor.next().charAt(0);
+    System.out.println("Deseja deletar o arquivo por completo? (s/n)");
+    char dellArquivo = leitor.next().charAt(0);
     leitor.nextLine();
-    if(dellArquivo == 's'){
-    Controller.deletarArquivo("listaAnimes.txt");
+    if (dellArquivo == 's') {
+      Controller.deletarArquivo("listaAnimes.txt");
     }
+    leitor.close();
   }
 }
