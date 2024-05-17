@@ -39,4 +39,5 @@ public class Main {
     if(dellArquivo == 's'){
     Controller.deletarArquivo("listaAnimes.txt");
     }
+  }
 }
