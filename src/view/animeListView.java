@@ -17,4 +17,13 @@ public class animeListView {
             e.printStackTrace();
         }
     }
+
+    public void showMenu(){
+        System.out.println("1 - Adicionar Animes");
+        System.out.println("2 - Recomendar Animes");
+        System.out.println("3 - Deletar Anime");
+        System.out.println("4 - Deletar lista");
+        System.out.println("5 - criar nova lista");
+        System.out.println("6 - fechar programa");
+    }
 }

@@ -1,2 +1,6 @@
 
 nome: dg; tipo: luta; avaliaçao: 1
+nome: teste; tipo: aventura; avaliaçao: 10
+nome: Naruto; tipo: shounen; avaliaçao: 7
+nome: DBZ; tipo: acao; avaliaçao: 1
+nome: null; tipo: null; avaliaçao: 0

@@ -15,4 +15,14 @@ public class userController {
       e.printStackTrace();
     }
   }
+//funçao que cria um arquivo txt com o nome do usuario
+  public void novaLista(String nome){
+    String nomeArquivo ="animes-" + nome + ".txt";
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo, true))) {
+      writer.write("");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }  
+  
 }

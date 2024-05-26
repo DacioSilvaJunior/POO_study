@@ -15,7 +15,7 @@ public class animeController {
     }
   }
 
-  public static void deletarAnime(String nomeArquivo, String nomeAnime){
+  public static void deletarAnime(String nomeArquivo, String nomeAnime) {
     try {
       File arquivo = new File(nomeArquivo);
       FileReader fr = new FileReader(arquivo);
@@ -48,7 +48,7 @@ public class animeController {
     }
   }
 
-  public static void deletarArquivo(String nomeArquivo){
+  public static void deletarArquivo(String nomeArquivo) {
     File arquivo = new File(nomeArquivo);
     if (arquivo.exists()) {
       if (arquivo.delete()) {
@@ -76,4 +76,33 @@ public class animeController {
     anime.setTipo(tipo);
     anime.setAvaliacao(avaliacao);
   }
+
+  // funçao que le a lista e recomenda animes similares
+  public static void recomendarAnimes(String nomeArquivo) {
+    try {
+      File arquivo = new File(nomeArquivo);
+      FileReader fr = new FileReader(arquivo);
+      BufferedReader br = new BufferedReader(fr);
+      String linha;
+      int encontrado = 0;
+
+      while ((linha = br.readLine()) != null) {
+        if (linha.contains("nome: ")) {
+          String nomeAnime = linha.substring(6, linha.indexOf(";"));
+          System.out.println("Recomendação: " + nomeAnime);
+          encontrado += 1;
+        }
+      }
+
+      br.close();
+      fr.close();
+
+      if (encontrado == 0) {
+        System.out.println("Nenhum anime encontrado no arquivo.");
+      }
+    } catch (IOException e) {
+      System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+    }
+  }
+
 }
