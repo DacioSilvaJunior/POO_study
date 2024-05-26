@@ -36,11 +36,7 @@ public class Anime {
   }
 
   public void setAvaliacao(int avaliacao) {
-    if (avaliacao >= 0 && avaliacao <= 10) {
-      this.avaliacao = avaliacao;
-    } else {
-      System.out.println("Avaliação inválida. A avaliação deve estar entre 0 e 10.");
-    }
+    this.avaliacao = avaliacao;
   }
 
   public void setTipo(String tipo) {

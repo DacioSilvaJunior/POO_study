@@ -1,0 +1,1 @@
+nome: naruto; tipo: shonen; avaliação: 10

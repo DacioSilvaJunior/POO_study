@@ -1,72 +1,78 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.io.IOException;
-import entities.Anime;
 import controller.animeController;
+import controller.userController;
+import entities.Anime;
 import view.animeListView;
 
 public class Main {
   public static void main(String[] args) throws IOException {
     Anime animex = new Anime();
     animeController animeController = new animeController();
+    animeListView View = new animeListView();
     userController userController = new userController();
-    animeListView animeView = new animeListView();
-    userView userView = new userView();
     Scanner leitor = new Scanner(System.in);
-    char repetir;
-
-    String arquivo = userController.wellCome();
-    if (arquivo != null) {
-      animeView.showMenu();
-    } else {
+    String nomeArquivo = userController.wellCome();
+    if (nomeArquivo == null)
       return;
-    }
 
-    int opcao = leitor.nextInt();
-    leitor.nextLine();
+    while (true) {
+      exibirOpcoes();
+      int opcao = leitor.nextInt();
+      leitor.nextLine(); // Consumir a nova linha
 
-    while (opcao != 6) {
       switch (opcao) {
         case 1:
-          do {
-            animeController.registrarAnimes(animex);
-            animeController.escreverEmArquivo(animex, arquivo);
-            System.out.println("Deseja registrar um novo Anime? (s/n)");
-            repetir = leitor.next().charAt(0);
-            leitor.nextLine();
-          } while (repetir == 's');
-          animeView.exibirListaAnimes(arquivo);
+          animeController.registrarAnimes(animex);
+          animeController.escreverEmArquivo(animex, nomeArquivo);
           break;
+
         case 2:
-          animeController.recomendarAnimes(arquivo);
+          View.exibirListaAnimes(nomeArquivo);
+          System.out.println("Informe o nome do anime que deseja deletar:");
+          String nomeAnime = leitor.nextLine();
+          animeController.deletarAnime(nomeArquivo, nomeAnime);
           break;
+
         case 3:
-          do {
-            System.out.println("Deseja deletar algum anime? (s/n)");
-            repetir = leitor.next().charAt(0);
-            leitor.nextLine();
-            if (repetir == 's') {
-              System.out.println("Informe o nome do anime que deseja deletar:");
-              String nomeAnime = leitor.nextLine();
-              animeController.deletarAnime(arquivo, nomeAnime);
-            }
-          } while (repetir == 's');
-          animeView.exibirListaAnimes(arquivo);
+          View.exibirListaAnimes(nomeArquivo);
+          System.out.println("Informe o nome do anime que deseja alterar:");
+          String nomeParaAlterar = leitor.nextLine();
+          animeController.alterarAnime(nomeArquivo, nomeParaAlterar);
           break;
+
         case 4:
-          System.out.println("Deseja deletar o arquivo por completo? (s/n)");
-          char dellArquivo = leitor.next().charAt(0);
-          leitor.nextLine();
-          if (dellArquivo == 's') {
-            animeController.deletarArquivo(arquivo);
+          View.exibirListaAnimes(nomeArquivo);
+          break;
+
+        case 9:
+          System.out.println("Deseja deletar o arquivo por completo? Digite \"CONFIRMAR\" para seguir: ");
+          if (leitor.nextLine().equals("CONFIRMAR")) {
+            animeController.deletarArquivo(nomeArquivo);
+          } else {
+            System.out.println("Operação cancelada!\n");
           }
           break;
-        case 6:
-          System.out.println("programa encerrado");
+
+        case 0:
+          System.out.println("Saindo...");
+          leitor.close();
+          animeController.fecharLeitor();
+          return;
+
         default:
-          System.out.println("Opção inválida.");
+          System.out.println("Opção inválida. Tente novamente.");
       }
     }
-    leitor.close();
+  }
+
+  public static void exibirOpcoes() {
+    System.out.println("Escolha uma opção:");
+    System.out.println("1. Registrar novo anime");
+    System.out.println("2. Deletar anime");
+    System.out.println("3. Alterar anime");
+    System.out.println("4. Exibir lista de animes");
+    System.out.println("9. Deletar o arquivo");
+    System.out.println("0. Sair");
   }
 }

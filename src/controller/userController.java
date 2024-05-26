@@ -1,3 +1,5 @@
+package controller;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.BufferedReader;
@@ -8,6 +10,8 @@ import entities.User;
 import java.util.Scanner;
 
 public class userController {
+
+  Scanner sc = new Scanner(System.in);
 
   public boolean checarRegistro(String filename, String user, String password) {
     try (BufferedReader br = new BufferedReader(new FileReader("Users.txt"))) {
@@ -66,19 +70,16 @@ public class userController {
   }
 
   public String wellCome() {
-    Scanner sc = new Scanner(System.in);
     User user = new User();
     String arquivo;
-    System.out
-        .println("Bem vindo ao sistema de recomendação de animes! \n digite seu nome para que possamos começar: ");
+    System.out.println("Bem vindo ao sistema de recomendação de animes! \ndigite seu nome para que possamos começar: ");
     String nome = sc.nextLine();
     System.out.println("agora digite sua senha: ");
     String senha = sc.nextLine();
 
     if (checarRegistro("Users.txt", nome, senha)) {
       arquivo = "animes-" + nome + ".txt";
-      System.out.println("Bem vindo " + nome + "! \n Aqui estao as sua opçoes : ");
-      sc.close();
+      System.out.println("Bem vindo " + nome + "! \nAqui estao as sua opçoes : ");
       return arquivo;
     }
 
@@ -91,12 +92,14 @@ public class userController {
         armazenarUsuario(user);
         arquivo = novaLista(user);
         System.out.println("sua lista foi criada com sucesso! \nAqui estao as sua opçoes : ");
-        sc.close();
         return arquivo;
       }
     }
-    sc.close();
     return null;
+  }
+
+  public void fecharLeitor() {
+    sc.close();
   }
 
 }
