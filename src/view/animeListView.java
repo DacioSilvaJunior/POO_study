@@ -23,7 +23,6 @@ public class animeListView {
         System.out.println("2 - Recomendar Animes");
         System.out.println("3 - Deletar Anime");
         System.out.println("4 - Deletar lista");
-        System.out.println("5 - criar nova lista");
         System.out.println("6 - fechar programa");
     }
 }

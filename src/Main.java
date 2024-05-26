@@ -8,28 +8,37 @@ import view.animeListView;
 public class Main {
   public static void main(String[] args) throws IOException {
     Anime animex = new Anime();
-    animeController Controller = new animeController();
-    animeListView View = new animeListView();
+    animeController animeController = new animeController();
+    userController userController = new userController();
+    animeListView animeView = new animeListView();
+    userView userView = new userView();
     Scanner leitor = new Scanner(System.in);
     char repetir;
-    
-    animeListView.showMenu();
+
+    String arquivo = userController.wellCome();
+    if (arquivo != null) {
+      animeView.showMenu();
+    } else {
+      return;
+    }
+
     int opcao = leitor.nextInt();
     leitor.nextLine();
-    while (opcao != 6){
-      switch (opcao){
+
+    while (opcao != 6) {
+      switch (opcao) {
         case 1:
           do {
-            Controller.registrarAnimes(animex);
-            Controller.escreverEmArquivo(animex, "listaAnimes.txt");
+            animeController.registrarAnimes(animex);
+            animeController.escreverEmArquivo(animex, arquivo);
             System.out.println("Deseja registrar um novo Anime? (s/n)");
             repetir = leitor.next().charAt(0);
             leitor.nextLine();
           } while (repetir == 's');
-          View.exibirListaAnimes("listaAnimes.txt");
+          animeView.exibirListaAnimes(arquivo);
           break;
         case 2:
-          Controller.recomendarAnimes("listaAnimes.txt");
+          animeController.recomendarAnimes(arquivo);
           break;
         case 3:
           do {
@@ -39,23 +48,18 @@ public class Main {
             if (repetir == 's') {
               System.out.println("Informe o nome do anime que deseja deletar:");
               String nomeAnime = leitor.nextLine();
-              Controller.deletarAnime("listaAnimes.txt", nomeAnime);
+              animeController.deletarAnime(arquivo, nomeAnime);
             }
           } while (repetir == 's');
-          View.exibirListaAnimes("listaAnimes.txt");
+          animeView.exibirListaAnimes(arquivo);
           break;
         case 4:
           System.out.println("Deseja deletar o arquivo por completo? (s/n)");
           char dellArquivo = leitor.next().charAt(0);
           leitor.nextLine();
           if (dellArquivo == 's') {
-            Controller.deletarArquivo("listaAnimes.txt");
+            animeController.deletarArquivo(arquivo);
           }
-          break;
-        case 5:
-          System.out.println("Informe o nome do usuario:");
-          String nomeUsuario = leitor.nextLine();
-          userController.novaLista(nomeUsuario);
           break;
         case 6:
           System.out.println("programa encerrado");
