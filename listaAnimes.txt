@@ -1,10 +1,1 @@
-//onde devo colocar o wellCome???????????????????
-// como devo implementar a recomendaçao??????
-// devo mudar a ideia do projeto para um banco?????
-// NAO FACA ISSO, ASSIM TA OTIMO
-
-nome: dg; tipo: luta; avaliaçao: 1
-nome: teste; tipo: aventura; avaliaçao: 10
-nome: Naruto; tipo: shounen; avaliaçao: 7
-nome: DBZ; tipo: acao; avaliaçao: 1
-nome: null; tipo: null; avaliaçao: 0
+nome: One Piece; tipo: Aventura; avaliação: 10

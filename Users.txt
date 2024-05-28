@@ -1,2 +1,3 @@
 dacio,123,djr,true
 Humberto,teste123,hmbrtlima@gmail.com,true
+ADMIN,ADMIN,ADMIN,true

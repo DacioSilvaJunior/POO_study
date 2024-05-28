@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -34,7 +35,12 @@ public class userController {
 
   public String novaLista(User user) {
     String nome = user.getNome();
-    String nomeArquivo = "animes-" + nome + ".txt";
+    String nomeArquivo;
+    if (nome.equals("ADMIN")) {
+      nomeArquivo = "listaAnimes.txt";
+    } else {
+      nomeArquivo = "animes-" + nome + ".txt";
+    }
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo, true))) {
       writer.write("");
     } catch (IOException e) {
@@ -78,7 +84,12 @@ public class userController {
     String senha = sc.nextLine();
 
     if (checarRegistro("Users.txt", nome, senha)) {
-      arquivo = "animes-" + nome + ".txt";
+      if (nome.equals("ADMIN")) {
+        arquivo = "listaAnimes.txt";
+      } else {
+        arquivo = "animes-" + nome + ".txt";
+      }
+
       System.out.println("Bem vindo " + nome + "! \nAqui estao as sua opçoes : ");
       return arquivo;
     }
@@ -96,6 +107,51 @@ public class userController {
       }
     }
     return null;
+  }
+
+  public static void apagarUsuario(String nomeUsuario) {
+    String nomeArquivo = "Users.txt";
+    try {
+        File arquivo = new File(nomeArquivo);
+        FileReader fr = new FileReader(arquivo);
+        BufferedReader br = new BufferedReader(fr);
+        String linha;
+        StringBuilder novoConteudo = new StringBuilder();
+        boolean encontrado = false;
+
+        while ((linha = br.readLine()) != null) {
+            if (!linha.startsWith(nomeUsuario + ",")) {
+                novoConteudo.append(linha).append("\n");
+            } else {
+                encontrado = true;
+            }
+        }
+
+        br.close();
+        fr.close();
+
+        if (encontrado) {
+            FileWriter fw = new FileWriter(arquivo);
+            fw.write(novoConteudo.toString());
+            fw.close();
+            System.out.println("Usuário deletado com sucesso!");
+
+            // Remover o arquivo associado ao usuário
+            String nomeArquivoUsuario = "animes-" + nomeUsuario + ".txt";
+            File arquivoUsuario = new File(nomeArquivoUsuario);
+            if (arquivoUsuario.exists()) {
+                if (arquivoUsuario.delete()) {
+                    System.out.println("Arquivo do usuário apagado com sucesso!");
+                } else {
+                    System.out.println("Erro ao apagar arquivo do usuário.");
+                }
+            }
+        } else {
+            System.out.println("Usuário não encontrado no arquivo.");
+        }
+    } catch (IOException e) {
+        System.err.println("Erro ao ler ou escrever no arquivo: " + e.getMessage());
+    }
   }
 
   public void fecharLeitor() {

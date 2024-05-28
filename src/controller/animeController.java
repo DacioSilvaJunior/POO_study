@@ -3,9 +3,15 @@ package controller;
 import java.io.*;
 import java.util.Scanner;
 import entities.Anime;
+import java.util.Locale;
 
 public class animeController {
     private static Scanner leitor = new Scanner(System.in);
+
+    private static boolean animeExistsInMasterList(String nomeAnime) {
+        String masterFileName = "listaAnimes.txt";
+        return animeExists(nomeAnime, masterFileName);
+    }    
 
     private static boolean animeExists(String nomeAnime, String nomeArquivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo))) {
@@ -22,6 +28,10 @@ public class animeController {
     }
 
     public static void escreverEmArquivo(Anime anime, String nomeArquivo) {
+        if (!nomeArquivo.equals("listaAnimes.txt") && !animeExistsInMasterList(anime.getNome())) {
+            System.out.println("Anime não encontrado na lista principal. Adição não permitida.");
+            return;
+        }
         if (animeExists(anime.getNome(), nomeArquivo)) {
             System.out.println("Anime já existe no arquivo.");
             return;
@@ -36,7 +46,7 @@ public class animeController {
         } catch (IOException e) {
             System.err.println("Erro ao escrever no arquivo: " + e.getMessage());
         }
-    }
+    }    
 
     public static void deletarAnime(String nomeArquivo, String nomeAnime) {
         try {
@@ -86,10 +96,12 @@ public class animeController {
 
     public static void registrarAnimes(Anime anime) {
         System.out.println("Informe o nome do anime:");
-        String nome = leitor.nextLine();
+        String nome = leitor.nextLine().toLowerCase(Locale.ROOT);
+        nome = capitalizeEachWord(nome);
 
         System.out.println("Informe o tipo do anime:");
-        String tipo = leitor.nextLine();
+        String tipo = leitor.nextLine().toLowerCase(Locale.ROOT);
+        tipo = capitalizeEachWord(tipo);
 
         System.out.println("Informe a avaliação do anime (entre 0 e 10):");
         int avaliacao = leitor.nextInt();
@@ -98,7 +110,7 @@ public class animeController {
         anime.setNome(nome);
         anime.setTipo(tipo);
         anime.setAvaliacao(avaliacao);
-    } 
+    }
 
     public static void alterarAnime(String nomeArquivo, String nomeAnime) {
         BufferedReader br = null;
@@ -117,15 +129,22 @@ public class animeController {
                     System.out.println("Anime encontrado. Informe os novos dados.");
 
                     System.out.println("Informe o novo nome do anime:");
-                    String novoNome = leitor.nextLine();
-                    if (animeExists(novoNome, nomeArquivo) && !novoNome.equals(nomeAnime)) {
+                    String novoNome = leitor.nextLine().toLowerCase(Locale.ROOT);
+                    novoNome = capitalizeEachWord(novoNome);
+
+                    if (!animeExistsInMasterList(novoNome) && !novoNome.equals(nomeAnime)) {
+                        System.out.println("Anime não encontrado na lista principal. Alteração não permitida.");
+                        novoConteudo.append(linha).append("\n"); // Mantenha a linha original
+                        return; // Pule a edição desta linha
+                    } else if (animeExists(novoNome, nomeArquivo) && !novoNome.equals(nomeAnime)) {
                         System.out.println("Nome já existe no arquivo.");
                         novoConteudo.append(linha).append("\n"); // Mantenha a linha original
                         return; // Pule a edição desta linha
                     }
 
                     System.out.println("Informe o novo tipo do anime:");
-                    String novoTipo = leitor.nextLine();
+                    String novoTipo = leitor.nextLine().toLowerCase(Locale.ROOT);
+                    novoTipo = capitalizeEachWord(novoTipo);
 
                     System.out.println("Informe a nova avaliação do anime (entre 0 e 10):");
                     int novaAvaliacao = leitor.nextInt();
@@ -164,7 +183,7 @@ public class animeController {
                 System.err.println("Erro ao fechar o BufferedReader: " + e.getMessage());
             }
         }
-    }    
+    }
 
     public static void recomendarAnimes(String nomeArquivo) {
         try {
@@ -198,5 +217,17 @@ public class animeController {
             leitor.close();
             //System.out.println("Scanner fechado.");
         }
+    }
+
+
+    private static String capitalizeEachWord(String str) {
+        String[] words = str.split("\\s");
+        StringBuilder capitalized = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                capitalized.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+            }
+        }
+        return capitalized.toString().trim();
     }
 }
