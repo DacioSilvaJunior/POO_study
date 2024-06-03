@@ -16,14 +16,4 @@ public class AnimeListView {
             System.err.println("Erro ao ler o arquivo " + nomeArquivo + ": " + e.getMessage());
         }
     }
-
-    public void showMenu() {
-        System.out.println("1 - Adicionar Animes");
-        System.out.println("2 - Recomendar Animes");
-        System.out.println("3 - Deletar Anime");
-        System.out.println("4 - Deletar Lista");
-        System.out.println("5 - Alterar Anime");
-        System.out.println("6 - Fechar Programa");
-        System.out.println("Escolha uma opção:");
-    }
 }

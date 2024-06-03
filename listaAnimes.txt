@@ -1,1 +1,1 @@
-nome: One Piece; tipo: Aventura; avaliação: 10
+nome: Naruto; tipo: Acao; avaliação: 10; telespectadores >> 1; pontuação = 10
