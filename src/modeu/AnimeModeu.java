@@ -1,9 +1,9 @@
 package modeu;
 
 import java.io.*;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 import entities.Anime;
-import java.util.Locale;
 import controller.AnimeController;
 
 public class AnimeModeu {
@@ -42,14 +42,14 @@ public class AnimeModeu {
                 if (linha.contains(nomeDoAnime)) {
                     encontrado = true;
                     int telespectadores = Integer
-                            .parseInt(linha.substring(linha.indexOf(">>") + 2, linha.lastIndexOf(";")));
+                            .parseInt(linha.substring(linha.indexOf(">") + 1, linha.lastIndexOf(";")));
                     telespectadores++;
                     float pontuacao = Float.parseFloat(linha.substring(linha.indexOf("=") + 1, linha.lastIndexOf(";")));
                     pontuacao = (pontuacao * (telespectadores - 1) + anime.getAvaliacao()) / telespectadores;
                     novoConteudo.append("nome: ").append(anime.getNome())
                             .append("; tipo: ").append(anime.getTipo())
                             .append("; avaliação: ").append(anime.getAvaliacao())
-                            .append("; telespectadores >> ").append(telespectadores)
+                            .append("; telespectadores > ").append(telespectadores)
                             .append("; pontuação = ").append(pontuacao).append("\n");
                 } else {
                     novoConteudo.append(linha).append("\n");
@@ -63,11 +63,11 @@ public class AnimeModeu {
             novoConteudo.append("nome: ").append(anime.getNome())
                     .append("; tipo: ").append(anime.getTipo())
                     .append("; avaliação: ").append(anime.getAvaliacao())
-                    .append("; telespectadores >> 1")
+                    .append("; telespectadores > 1")
                     .append("; pontuação = ").append(anime.getAvaliacao()).append("\n");
         }
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(ARQUIVO_PRINCIPAL, false))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(ARQUIVO_PRINCIPAL, true))) {
             writer.print(novoConteudo.toString());
             System.out.println("Anime atualizado no arquivo principal com sucesso!");
         } catch (IOException e) {
@@ -211,6 +211,41 @@ public class AnimeModeu {
             }
         } else {
             System.out.println("Anime não encontrado no arquivo.");
+        }
+    }
+
+    public static void rankDeAnimes() {
+        List<Anime> listaAnimes = new ArrayList<Anime>();
+
+        // Ler o arquivo
+        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_PRINCIPAL))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] partes = linha.split(";");
+                String nome = partes[0].split(":")[1].trim();
+                String tipo = partes[1].split(":")[1].trim();
+                int avaliacao = Integer.parseInt(partes[2].split(":")[1].trim());
+                int telespectadores = Integer.parseInt(partes[3].split(">>")[1].trim());
+                float pontuacao = Float.parseFloat(partes[4].split("=")[1].trim());
+
+                Anime anime = new Anime(nome, tipo, avaliacao, telespectadores, pontuacao);
+                listaAnimes.add(anime);
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+        }
+
+        // Organizar a lista de acordo com a pontuação
+        Collections.sort(listaAnimes, new Comparator<Anime>() {
+            public int compare(Anime a1, Anime a2) {
+                // Comparar em ordem decrescente de pontuação
+                return Float.compare(a2.getPontuacao(), a1.getPontuacao());
+            }
+        });
+
+        // Imprimir a lista organizada
+        for (Anime anime : listaAnimes) {
+            System.out.println(anime);
         }
     }
 }

@@ -43,6 +43,9 @@ public class Main {
                     case 5:
                         userModeu.alterarUsuario(arquivo);
                         break;
+                    case 6:
+                        animeModeu.rankDeAnimes();
+                        break;
                     case 8:
                         userModeu.apagarUsuario(arquivo);
                         break;
@@ -70,6 +73,7 @@ public class Main {
         System.out.println("3. Alterar anime");
         System.out.println("4. Exibir lista de animes");
         System.out.println("5. Alterar dados de usuário");
+        System.out.println("6. Exibir rank de animes");
         System.out.println("8. Apagar usuário");
         System.out.println("9. Deletar o arquivo");
         System.out.println("0. Sair");

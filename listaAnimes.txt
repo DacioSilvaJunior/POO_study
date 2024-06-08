@@ -1,1 +1,3 @@
-nome: Naruto; tipo: Acao; avaliação: 10; telespectadores >> 1; pontuação = 10
+nome: Naruto; tipo: Acao; avaliação: 10; telespectadores > 1; pontuação = 10
+nome: Dgb; tipo: Luta; avaliação: 6; telespectadores > 1; pontuação = 6
+nome: One Piace; tipo: Aventura; avaliação: 8; telespectadores > 1; pontuação = 8

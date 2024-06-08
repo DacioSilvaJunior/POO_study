@@ -1,1 +1,5 @@
 
+nome: Dgb; tipo: Luta; avaliação: 6
+nome: One Piace; tipo: Aventura; avaliação: 8
+
+nome: Naruto; tipo: Luta; avaliação: 5
